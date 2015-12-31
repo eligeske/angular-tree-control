@@ -4,7 +4,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 }
 (function ( angular ) {
     'use strict';
-    
+
     angular.module( 'treeControl', [] )
         .constant('treeConfig', {
             templateUrl: null
@@ -24,12 +24,12 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 else
                     return "";
             }
-            
+
             function ensureDefault(obj, prop, value) {
                 if (!obj.hasOwnProperty(prop))
                     obj[prop] = value;
             }
-            
+
             return {
                 restrict: 'EA',
                 require: "treecontrol",
@@ -103,7 +103,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     ensureDefault($scope.options, "isLeaf", defaultIsLeaf);
                     ensureDefault($scope.options, "allowDeselect", true);
                     ensureDefault($scope.options, "isSelectable", defaultIsSelectable);
-                  
+                    ensureDefault($scope.options, "forceExpandAll", false);
+
                     $scope.selectedNodes = $scope.selectedNodes || [];
                     $scope.expandedNodes = $scope.expandedNodes || [];
                     $scope.expandedNodesMap = {};
@@ -147,7 +148,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     };
 
                     $scope.nodeExpanded = function() {
-                        return !!$scope.expandedNodesMap[this.$id];
+                        return $scope.options.forceExpandAll || !!$scope.expandedNodesMap[this.$id];
                     };
 
                     $scope.selectNodeHead = function() {
